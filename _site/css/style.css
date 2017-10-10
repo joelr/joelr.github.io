@@ -2248,16 +2248,16 @@ button.btn i, input.btn i { padding-right: 0.5em; }
 /*--------------------------------------------------------------
 	2.0 Home Hero
 --------------------------------------------------------------*/
-.hero-container { margin: 10em 0 9em 0; }
-@media only screen and (max-width: 768px) { .hero-container { margin: 5em 0 5em 0; } }
-@media only screen and (min-width: 770px) and (max-width: 990px) { .hero-container { margin: 5em 0 5em 0; } }
+.hero-container { margin: 7em 0 0em 0; }
+@media only screen and (max-width: 768px) { .hero-container { margin: 5em 0 0em 0; } }
+@media only screen and (min-width: 770px) and (max-width: 990px) { .hero-container { margin: 5em 0 0em 0; } }
 
 .hero-content { width: 60%; margin: 0 auto; display: table; }
 @media only screen and (min-width: 992px) and (max-width: 1195px) { .hero-content { width: 100%; } }
 @media only screen and (min-width: 770px) and (max-width: 990px) { .hero-content { width: 100%; } }
 @media only screen and (max-width: 768px) { .hero-content { width: 100%; } }
 .hero-content h1 { font-size: 48px; }
-.hero-content p { margin: 2em 0 4em 0; }
+.hero-content p { margin: 2em 0 0em 0; }
 .hero-content .hero-buttons { margin: 0 auto; display: table; }
 .hero-content .hero-buttons i { padding-right: 0.5em; }
 
@@ -2283,7 +2283,7 @@ button.btn i, input.btn i { padding-right: 0.5em; }
 /*--------------------------------------------------------------
 	3.0 Posts
 --------------------------------------------------------------*/
-#portfolio .container { margin-top: 10em; }
+#portfolio .container { margin-top: 2em; }
 @media only screen and (max-width: 768px) { #portfolio .container { margin-top: 2em; } }
 #portfolio .container .break { margin: 8em 0; }
 @media only screen and (max-width: 768px) { #portfolio .container .break { margin: 2em 0; } }

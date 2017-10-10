@@ -2,10 +2,11 @@
 title: "Hello. I'm Joel Richards."
 description: "I'm a software developer."
 url: 'https://easyjo.com/' # the base hostname & protocol for your site
-nav: "true"
+nav: "false"
 footer_text: '© Joel Richards'
 twitter: 'easyjo'
 github: 'joelr'
+linkedin: "https://www.linkedin.com/in/joelrichardsuk/"
 # Admin Settings
 admin_name: 'Joel Richards'
 admin_email: 'jo@easyjo.com'

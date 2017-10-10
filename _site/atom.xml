@@ -4,13 +4,22 @@
  <title>Hello. I'm Joel Richards.</title>
  <link href="https://easyjo.com//atom.xml" rel="self"/>
  <link href="https://easyjo.com//"/>
- <updated>2017-10-10T12:49:02+10:00</updated>
+ <updated>2017-10-10T19:48:24+10:00</updated>
  <id>https://easyjo.com/</id>
  <author>
    <name>Joel Richards</name>
    <email>jo@easyjo.com</email>
  </author>
 
+ 
+ <entry>
+   <title>JustCharity.org</title>
+   <link href="https://easyjo.com//development/2016/02/17/weathercast.html"/>
+   <updated>2016-02-17T00:00:00+10:00</updated>
+   <id>https://easyjo.com//development/2016/02/17/weathercast</id>
+   <content type="html">
+</content>
+ </entry>
  
 
 </feed>
