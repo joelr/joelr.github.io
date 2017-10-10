@@ -1,0 +1,12 @@
+# Site Settings
+title: "Hello. I'm Joel Richards."
+description: "I'm a software developer."
+url: 'https://easyjo.com/' # the base hostname & protocol for your site
+nav: "true"
+footer_text: '© Joel Richards'
+twitter: 'easyjo'
+github: 'joelr'
+# Admin Settings
+admin_name: 'Joel Richards'
+admin_email: 'jo@easyjo.com'
+google_analytics: "UA-9999999-99" # Update with your own tracking ID

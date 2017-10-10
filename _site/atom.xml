@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Hello. I'm Joel Richards.</title>
+ <link href="https://easyjo.com//atom.xml" rel="self"/>
+ <link href="https://easyjo.com//"/>
+ <updated>2017-10-10T12:49:02+10:00</updated>
+ <id>https://easyjo.com/</id>
+ <author>
+   <name>Joel Richards</name>
+   <email>jo@easyjo.com</email>
+ </author>
+
+ 
+
+</feed>
