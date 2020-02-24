@@ -17,7 +17,6 @@ After a couple of aquisitions in the 90s, 2000s, MEDL now exists under Dynex Sem
 
 <img class="img-responsive" src="/img/articles/keyboard1.jpg" title="The finished keyboard, complete with backlights">
 
-https://gammon.com.au/forum/?id=14175
 ### Opening up the keyboard
 
 First step is to checkout the keyboard PCB/Matrix itself. The connector on the inside of the keyboard is a MIL-STD 26pin proprietary connector. This connects to a ribbon cable directly on the board.
