@@ -1,0 +1,322 @@
+<!doctype html>
+<head>
+
+  <!-- Meta -->
+  <meta charset="utf-8">
+
+  <title>Keyboard - Hello. I'm Joel Richards.</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="Hello. I'm Joel Richards. - I'm a software developer." href="https://easyjo.com//feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Hello. I'm Joel Richards. - I'm a software developer." href="https://easyjo.com//atom.xml">
+
+  <!-- Favicons -->
+  <link rel="icon" href="https://easyjo.com//img/favicon.png">
+
+  <!-- Fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,400italic,700|Merriweather:400,300,300italic,400italic,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/animate.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/default.css">
+
+</head>
+<body class="">
+
+<div class="main container" id="top">
+
+  
+  <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">Joel Richards</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              
+                <li>
+                  <a href="/">Home</a>
+                </li>
+              
+                <li>
+                  <a href="/articles">Articles</a>
+                </li>
+              
+            </ul>
+          </div>
+      </div>
+  </nav>
+  
+
+
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
+          <h2 id="ex-mod-keyboard-project">Ex-MoD Keyboard project</h2>
+
+<p>This project has been on the backburner a while.. I originally picked up this AT-02 Marconi / MEDL keyboard a few years ago (2017), did not originally get to far, then jumped back on the project in early 2020. As far as I can see it’s a British military keyboard from 1989, but after a lot of research I could not confirm where it was originally used. It has a few interesting buttons such as: XALM, EW (electronic warfare?), MSGQ GET, PRNT SUSP, WPNS HOLD. If anyone has any insights as to what this would have been used for, I’d love to know.</p>
+
+<p>Some model specs of the keyboard:<br /></p>
+
+<p><strong>AT02 / AT-02 Marconi</strong> / Marconi Electronic Devices Ltd (MEDL)<br />
+NSN 7025-99-588-1302 (first seen 1989)<br />
+2162-03025-02-3-T<br />
+After a couple of aquisitions in the 90s, 2000s, MEDL now exists under Dynex Semiconductor Ltd.</p>
+
+<p><img class="img-responsive" src="/img/articles/keyboard1.jpg" title="The finished keyboard, complete with backlights" /></p>
+
+<p>https://gammon.com.au/forum/?id=14175</p>
+<h3 id="opening-up-the-keyboard">Opening up the keyboard</h3>
+
+<p>First step is to checkout the keyboard PCB/Matrix itself. The connector on the inside of the keyboard is a MIL-STD 26pin proprietary connector. This connects to a ribbon cable directly on the board.</p>
+
+<p>The downside of this board is that the control circuit is embedded in a multi-layer PCB along with the keyboard matrix. Normally keyboards will have the matrix as a separate board, with the control circuit separate to the matrix itself. If the custom control circuit was separate from the matrix, this would have been much easier to work with.</p>
+
+<p><em>The keyboard matrix, PCB top side, with the rubber buttons used to close the circuits</em>
+<img class="img-responsive" src="/img/articles/keyboard2.jpg" title="" /></p>
+
+<p><em>The bottom of the PCB, showing the custom controller circuit, ribbon cable connector, and SMD LEDs for the backlights</em>
+<img class="img-responsive" src="/img/articles/keyboard3.jpg" title="" /></p>
+
+<p>After tracing the pins from the ribbon cable connector, I found that none of the pins represent any of keyboard matrix columns or rows.</p>
+
+<h3 id="how-keyboard-matrixes-work-and-decoding-them">How keyboard matrixes work, and decoding them</h3>
+
+<p>Keyboards typically use rows and columns connnected by the keyboard switches. Scanning each row and column allows the control circuit to determine which key is pressed, without needing an input per switch.</p>
+
+<p>This particular keyboard was 8 rows with 11 columns, giving a max of 88 keys.</p>
+
+<p><strong>Tracing a keyboard matrix</strong>: This is a relatively simple process, but time consuming. In an ideal world, each row and column of a keyboard would roughly line up with the actual keyboard layout, but this is almost never the case.</p>
+
+<p>To trace a keyboard you need to systematically trace which switches are connected to each other. Starting with the terminnal from one side of the switch, with an Ohmmeter find out which keys are connected to it. Repeat this for each key, you’ll eventually see a pattern of rows or columns. The columns will all be terminated to one side of a switch, the rows to the other side.</p>
+
+<p>Once you’ve done this, you can number each column and row, then the next step is to work out where on the PCB these terminate.. after confirming the ribbon cable pinout didn’t connect directly to the matrix, I checked out the custom MEDL chip. As somewhat expected, 19 of the PLCC pins connected directly to each of the 8x11 keyboard matrix outputs.</p>
+
+<p>The complicated step here is connecting a ribbon cable to where the PLCC 68 chip is situated, if this was a more normal keyboard, the terminals may already have terminals elsewhere that would be more accessible by a control circuit. However, this required removed the chip, and directly soldering the ribbon cable to the pins we care about.</p>
+
+<p><em>Removing the custom PLCC 68, replacing the relevant row/column pins with a ribbon cable.</em>
+<img class="img-responsive" src="/img/articles/keyboard4.jpg" title="" /></p>
+
+<p><strong>Connecting to a new USB HID controller</strong></p>
+
+<p>Once you have access to the matrix, you have a number of options. Firstly, you need a board which allows for a USB HID inteface, so you can natively use it as a Keyboard (or mouse) input.</p>
+
+<p>Here’s a couple of options:</p>
+
+<ul>
+  <li>Teensy (many models)</li>
+  <li>Arduino Leonardo</li>
+</ul>
+
+<p>I opted for a Leonardo, only because the local store had them in stock, I otherwise would have opted for a Teensy. Just ensure you have enough digital I/O pins for the rows and columns in your circuit. I had 19 (8x11), the Leonardo has 20x digital pins, so this was fine.</p>
+
+<p>The next step is connecting all the pins to your chosen board, I chose pins 0-7 for the rows, and 8-13 and A0-A4 for the columns. A0-A4 are analog pins on the Leonardo, but can be used as digital I/Os.</p>
+
+<p><em>Connecting all the ribbon cable pins to a Leonardo</em>
+<img class="img-responsive" src="/img/articles/keyboard5.jpg" title="" /></p>
+
+<p>From here, the code options are equally unlimited, there’s default libraries around for interacting with keypads/keyboard matrixes. I opted for the <a href="https://playground.arduino.cc/Code/Keypad/">Keypad arduino library</a>. Depending on the library, and the setup of your matrix (whether diodes are used etc), you may be susceptible to ghosting or shorting if trying to detect multiple keypresses at once. If you use the above Keypad library, you should be fine for one press at a time.</p>
+
+<p>There’s various code examples for the libraries, but the they mostly include defining the pins used for the rows and columns as well as a keymap.</p>
+
+<p><strong>Arduino Keyboard HID library</strong></p>
+
+<p>Arduino has a default <a href="https://www.arduino.cc/reference/en/language/functions/usb/keyboard/">Keyboard library</a> that replicates a standard keyboard.</p>
+
+<p><strong>Installation:</strong> If you’ve not used this before, goto Manage Libraries, then search for Keyboard, then install <em>Keyboard Built-in by Arduino</em>.</p>
+
+<p>Small example on using the library, checkout the <a href="https://www.arduino.cc/en/Reference/KeyboardModifiers">Keyboard Modifiers Reference</a>:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"> 
+<span class="cp">#include &lt;Keyboard.h&gt;
+</span>
+<span class="n">Keyboard</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"Hello"</span><span class="p">);</span>
+<span class="n">Keyboard</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="sc">'c'</span><span class="p">);</span> 
+<span class="n">Keyboard</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">KEY_LEFT_CTRL</span><span class="p">);</span></code></pre></figure>
+
+<p><strong>Setup of the keyboard/keypad</strong></p>
+
+<p>The below is the definition of the keypad object, with the relevant number of rows and columns. The keys object contains the keymap, with upper_keys being the upper case keys. If you’ve planned ahead in mapping your key matrix to the relevant keys, you should already know what these values are, if not, you can manually go through each row, test the keys, and update the key mapping.</p>
+
+<p>I used hex for the special keys here, only because I started working on the code being pulling in the keyboard library which includes the key definitions.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"> 
+<span class="k">const</span> <span class="n">byte</span> <span class="n">ROWS</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+<span class="k">const</span> <span class="n">byte</span> <span class="n">COLS</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+
+<span class="kt">char</span> <span class="n">keys</span><span class="p">[</span><span class="n">ROWS</span><span class="p">][</span><span class="n">COLS</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="p">{</span><span class="n">NO_KEY</span><span class="p">,</span><span class="n">NO_KEY</span><span class="p">,</span><span class="n">NO_KEY</span><span class="p">,</span><span class="n">NO_KEY</span><span class="p">,</span><span class="mh">0xD3</span><span class="p">,</span><span class="mh">0xD9</span><span class="p">,</span><span class="mh">0x85</span><span class="p">,</span><span class="mh">0xD7</span><span class="p">,</span><span class="mh">0xD8</span><span class="p">,</span><span class="mh">0xDA</span><span class="p">,</span><span class="mh">0x20</span><span class="p">},</span>
+  <span class="p">{</span><span class="sc">'0'</span><span class="p">,</span><span class="sc">'.'</span><span class="p">,</span><span class="sc">'3'</span><span class="p">,</span><span class="sc">'2'</span><span class="p">,</span><span class="sc">'5'</span><span class="p">,</span><span class="sc">'4'</span><span class="p">,</span><span class="sc">'6'</span><span class="p">,</span><span class="sc">'9'</span><span class="p">,</span><span class="sc">'8'</span><span class="p">,</span><span class="sc">'7'</span><span class="p">,</span><span class="sc">'1'</span><span class="p">},</span>                               
+  <span class="p">{</span><span class="sc">'&lt;'</span><span class="p">,</span><span class="sc">'/'</span><span class="p">,</span><span class="mh">0xB0</span><span class="p">,</span><span class="sc">'\''</span><span class="p">,</span><span class="mh">0xB2</span><span class="p">,</span><span class="sc">'='</span><span class="p">,</span><span class="sc">'['</span><span class="p">,</span><span class="mh">0xCB</span><span class="p">,</span><span class="mh">0xCA</span><span class="p">,</span><span class="mh">0xC9</span><span class="p">,</span><span class="sc">']'</span><span class="p">},</span>
+  <span class="p">{</span><span class="sc">';'</span><span class="p">,</span><span class="sc">':'</span><span class="p">,</span><span class="sc">'m'</span><span class="p">,</span><span class="sc">'n'</span><span class="p">,</span><span class="sc">'c'</span><span class="p">,</span><span class="sc">'x'</span><span class="p">,</span><span class="sc">'v'</span><span class="p">,</span><span class="sc">'z'</span><span class="p">,</span><span class="mh">0xC1</span><span class="p">,</span><span class="mh">0x81</span><span class="p">,</span><span class="sc">'b'</span><span class="p">},</span>
+  <span class="p">{</span><span class="sc">'o'</span><span class="p">,</span><span class="n">NO_KEY</span><span class="p">,</span><span class="sc">'k'</span><span class="p">,</span><span class="sc">'j'</span><span class="p">,</span><span class="sc">'f'</span><span class="p">,</span><span class="sc">'e'</span><span class="p">,</span><span class="sc">'g'</span><span class="p">,</span><span class="sc">'s'</span><span class="p">,</span><span class="sc">'a'</span><span class="p">,</span><span class="mh">0x80</span><span class="p">,</span><span class="sc">'h'</span><span class="p">},</span>
+  <span class="p">{</span><span class="mh">0xC7</span><span class="p">,</span><span class="mh">0xC8</span><span class="p">,</span><span class="mh">0xC6</span><span class="p">,</span><span class="mh">0xC5</span><span class="p">,</span><span class="mh">0xC2</span><span class="p">,</span><span class="mh">0x82</span><span class="p">,</span><span class="mh">0xC3</span><span class="p">,</span><span class="mh">0xD2</span><span class="p">,</span><span class="mh">0x83</span><span class="p">,</span><span class="mh">0xB1</span><span class="p">,</span><span class="mh">0xC4</span><span class="p">},</span>
+ <span class="p">{</span><span class="sc">'l'</span><span class="p">,</span><span class="sc">'p'</span><span class="p">,</span><span class="sc">'i'</span><span class="p">,</span><span class="sc">'u'</span><span class="p">,</span><span class="sc">'r'</span><span class="p">,</span><span class="sc">'d'</span><span class="p">,</span><span class="sc">'t'</span><span class="p">,</span><span class="sc">'w'</span><span class="p">,</span><span class="sc">'q'</span><span class="p">,</span><span class="mh">0xB3</span><span class="p">,</span><span class="sc">'y'</span><span class="p">},</span>
+  <span class="p">{</span><span class="sc">'0'</span><span class="p">,</span><span class="sc">'-'</span><span class="p">,</span><span class="sc">'9'</span><span class="p">,</span><span class="sc">'8'</span><span class="p">,</span><span class="sc">'5'</span><span class="p">,</span><span class="sc">'4'</span><span class="p">,</span><span class="sc">'6'</span><span class="p">,</span><span class="sc">'3'</span><span class="p">,</span><span class="sc">'2'</span><span class="p">,</span><span class="sc">'1'</span><span class="p">,</span><span class="sc">'7'</span><span class="p">},</span>
+
+<span class="p">};</span>
+
+<span class="kt">char</span> <span class="n">upper_keys</span><span class="p">[</span><span class="n">ROWS</span><span class="p">][</span><span class="n">COLS</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="p">{</span><span class="n">NO_KEY</span><span class="p">,</span><span class="n">NO_KEY</span><span class="p">,</span><span class="n">NO_KEY</span><span class="p">,</span><span class="n">NO_KEY</span><span class="p">,</span><span class="mh">0xD3</span><span class="p">,</span><span class="mh">0xD9</span><span class="p">,</span><span class="mh">0x85</span><span class="p">,</span><span class="mh">0xD7</span><span class="p">,</span><span class="mh">0xD8</span><span class="p">,</span><span class="mh">0xDA</span><span class="p">,</span><span class="mh">0x20</span><span class="p">},</span>
+  <span class="p">{</span><span class="sc">')'</span><span class="p">,</span><span class="sc">'.'</span><span class="p">,</span><span class="sc">'#'</span><span class="p">,</span><span class="sc">'@'</span><span class="p">,</span><span class="sc">'%'</span><span class="p">,</span><span class="sc">'$'</span><span class="p">,</span><span class="sc">'^'</span><span class="p">,</span><span class="sc">'('</span><span class="p">,</span><span class="sc">'*'</span><span class="p">,</span><span class="sc">'&amp;'</span><span class="p">,</span><span class="sc">'!'</span><span class="p">},</span>                               
+  <span class="p">{</span><span class="sc">'&gt;'</span><span class="p">,</span><span class="sc">'?'</span><span class="p">,</span><span class="mh">0xD3</span><span class="p">,</span><span class="sc">'"'</span><span class="p">,</span><span class="mh">0xB2</span><span class="p">,</span><span class="sc">'+'</span><span class="p">,</span><span class="sc">'{'</span><span class="p">,</span><span class="mh">0xCB</span><span class="p">,</span><span class="mh">0xCA</span><span class="p">,</span><span class="mh">0xC9</span><span class="p">,</span><span class="sc">'}'</span><span class="p">},</span>
+  <span class="p">{</span><span class="sc">';'</span><span class="p">,</span><span class="sc">':'</span><span class="p">,</span><span class="sc">'M'</span><span class="p">,</span><span class="sc">'N'</span><span class="p">,</span><span class="sc">'C'</span><span class="p">,</span><span class="sc">'X'</span><span class="p">,</span><span class="sc">'V'</span><span class="p">,</span><span class="sc">'Z'</span><span class="p">,</span><span class="mh">0xC1</span><span class="p">,</span><span class="mh">0x81</span><span class="p">,</span><span class="sc">'B'</span><span class="p">},</span>
+  <span class="p">{</span><span class="sc">'O'</span><span class="p">,</span><span class="n">NO_KEY</span><span class="p">,</span><span class="sc">'K'</span><span class="p">,</span><span class="sc">'J'</span><span class="p">,</span><span class="sc">'F'</span><span class="p">,</span><span class="sc">'E'</span><span class="p">,</span><span class="sc">'G'</span><span class="p">,</span><span class="sc">'S'</span><span class="p">,</span><span class="sc">'A'</span><span class="p">,</span><span class="mh">0x80</span><span class="p">,</span><span class="sc">'H'</span><span class="p">},</span>
+  <span class="p">{</span><span class="mh">0xC7</span><span class="p">,</span><span class="mh">0xC8</span><span class="p">,</span><span class="mh">0xC6</span><span class="p">,</span><span class="mh">0xC5</span><span class="p">,</span><span class="mh">0xC2</span><span class="p">,</span><span class="mh">0x82</span><span class="p">,</span><span class="mh">0xC3</span><span class="p">,</span><span class="mh">0xD2</span><span class="p">,</span><span class="mh">0x83</span><span class="p">,</span><span class="mh">0xB1</span><span class="p">,</span><span class="mh">0xC4</span><span class="p">},</span>
+ <span class="p">{</span><span class="sc">'L'</span><span class="p">,</span><span class="sc">'P'</span><span class="p">,</span><span class="sc">'I'</span><span class="p">,</span><span class="sc">'U'</span><span class="p">,</span><span class="sc">'R'</span><span class="p">,</span><span class="sc">'D'</span><span class="p">,</span><span class="sc">'T'</span><span class="p">,</span><span class="sc">'W'</span><span class="p">,</span><span class="sc">'Q'</span><span class="p">,</span><span class="mh">0xB3</span><span class="p">,</span><span class="sc">'Y'</span><span class="p">},</span>
+  <span class="p">{</span><span class="sc">')'</span><span class="p">,</span><span class="sc">'_'</span><span class="p">,</span><span class="sc">'('</span><span class="p">,</span><span class="sc">'*'</span><span class="p">,</span><span class="sc">'%'</span><span class="p">,</span><span class="sc">'$'</span><span class="p">,</span><span class="sc">'^'</span><span class="p">,</span><span class="sc">'#'</span><span class="p">,</span><span class="sc">'@'</span><span class="p">,</span><span class="sc">'!'</span><span class="p">,</span><span class="sc">'&amp;'</span><span class="p">},</span>
+
+<span class="p">};</span>
+
+
+<span class="n">byte</span> <span class="n">rowPins</span><span class="p">[</span><span class="n">ROWS</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">};</span> <span class="c1">//connect to the row pinouts of the keypad
+</span><span class="n">byte</span> <span class="n">colPins</span><span class="p">[</span><span class="n">COLS</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span> <span class="n">A0</span><span class="p">,</span><span class="n">A1</span><span class="p">,</span><span class="n">A2</span><span class="p">,</span><span class="n">A3</span><span class="p">,</span><span class="n">A4</span><span class="p">};</span> <span class="c1">//connect to the column pinouts of the keypad
+</span>
+<span class="n">Keypad</span> <span class="n">keypad</span> <span class="o">=</span> <span class="n">Keypad</span><span class="p">(</span> <span class="n">makeKeymap</span><span class="p">(</span><span class="n">keys</span><span class="p">),</span> <span class="n">rowPins</span><span class="p">,</span> <span class="n">colPins</span><span class="p">,</span> <span class="n">ROWS</span><span class="p">,</span> <span class="n">COLS</span> <span class="p">);</span></code></pre></figure>
+
+<p>Now we have the keypad defined, we need to be able to actually read the key presses and push to the keyboard object.</p>
+
+<p>The most simple implementation would look something like the below, all we’re doing here is fetching the key, checking a key is pressed, then pushing to the keyboard.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c">  
+<span class="kt">void</span> <span class="n">loop</span><span class="p">(){</span>
+  <span class="kt">char</span> <span class="n">key</span> <span class="o">=</span> <span class="n">keypad</span><span class="p">.</span><span class="n">getKey</span><span class="p">();</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">!=</span> <span class="n">NO_KEY</span><span class="p">){</span>
+  	<span class="n">Keyboard</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The above covers very simple keypads and keyboards, but to deal with shift, and caps lock, we need a bit more work.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="n">loop</span><span class="p">(){</span>
+  <span class="kt">char</span> <span class="n">key</span> <span class="o">=</span> <span class="n">keypad</span><span class="p">.</span><span class="n">getKey</span><span class="p">();</span>
+  <span class="kt">char</span> <span class="n">upper</span><span class="p">;</span>
+  <span class="n">upper</span> <span class="o">=</span> <span class="n">findKey</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+    <span class="c1">//if we're in shift lock, shift mode, send the upper key, and reset shift state
+</span>    <span class="k">if</span> <span class="p">((</span><span class="n">shift_state</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">shift_state</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">(</span><span class="n">keypad</span><span class="p">.</span><span class="n">isPressed</span><span class="p">(</span><span class="mh">0x81</span><span class="p">)</span> <span class="o">||</span> <span class="n">keypad</span><span class="p">.</span><span class="n">isPressed</span><span class="p">(</span><span class="mh">0x85</span><span class="p">)</span> <span class="o">||</span> <span class="n">keypad</span><span class="p">.</span><span class="n">isPressed</span><span class="p">(</span><span class="mh">0xC1</span><span class="p">)</span> <span class="p">))</span>
+    <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">!=</span> <span class="n">NO_KEY</span><span class="p">){</span>
+        <span class="n">Keyboard</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">upper</span><span class="p">);</span>
+      	<span class="k">if</span> <span class="p">(</span><span class="n">shift_state</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+          <span class="n">shift_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      
+    <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">!=</span> <span class="n">NO_KEY</span><span class="p">){</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">keypad</span><span class="p">.</span><span class="n">isPressed</span><span class="p">(</span><span class="mh">0x81</span><span class="p">)</span> <span class="o">||</span> <span class="n">keypad</span><span class="p">.</span><span class="n">isPressed</span><span class="p">(</span><span class="mh">0x85</span><span class="p">)){</span>
+        <span class="c1">//if either shift key is set, set temporary shift lock
+</span>        <span class="n">shift_state</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">keypad</span><span class="p">.</span><span class="n">isPressed</span><span class="p">(</span><span class="mh">0xC1</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">//Caps lock pressed
+</span>        <span class="k">if</span> <span class="p">(</span><span class="n">shift_state</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="c1">//clear if already set
+</span>          <span class="n">shift_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">else</span>
+          <span class="n">shift_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">//set shift lock
+</span>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">shift_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">Keyboard</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+      <span class="p">}</span>
+       
+    <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p><strong>Backlight</strong></p>
+
+<p>Tracing the backlight circuit was relatively straightforward as it’s on the exposed side of the PCB, however, it seems it’s powered in columns.. possibly a brightness circuit, to avoid entirely working out the custom controller further, I just bridged the columns and powered them all together.</p>
+
+<p>Success!</p>
+
+
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'https://easyjo.com/articles/keyboard/';  // Replace PAGE_URL with your page's canonical URL variable
+//this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://easyjo.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+        </div>
+      </div>
+    </div>
+  </article>
+
+
+
+
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-xs-12 col-md-2 col-md-offset-1">
+            <p class="text-muted text-left "><a href="https://easyjo.com/">© Joel Richards</a></p>
+          </div>
+
+          <div class="col-xs-12 col-md-6 col-md-offset-2">
+            <a class="section-jump" href="#top">
+              <i class="fa fa-angle-up fa-3x"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- .main.container -->
+
+    <!-- JavaScript -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://easyjo.com//js/wow.min.js"></script>
+    <script src="https://easyjo.com//js/app.js"></script>
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', ' UA-9999999-99', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
+    </body>
+</html>
+
+
+

@@ -1,0 +1,8 @@
+- article:
+    layout: inner
+    position: left
+    title: 'Keyboard'
+    categories: development
+    featured_image: 'img/posts/jc.jpg'
+    project_link: '/articles/keyboard/'
+    lead_text: 'Custom keyboard'
