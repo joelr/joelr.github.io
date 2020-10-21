@@ -44,7 +44,7 @@ To trace a keyboard you need to systematically trace which switches are connecte
 
 Once you've done this, you can number each column and row, then the next step is to work out where on the PCB these terminate.. after confirming the ribbon cable pinout didn't connect directly to the matrix, I checked out the custom MEDL chip. As somewhat expected, 19 of the PLCC pins connected directly to each of the 8x11 keyboard matrix outputs.  
 
-The complicated step here is connecting a ribbon cable to where the PLCC 68 chip is situated, if this was a more normal keyboard, the terminals may already have terminals elsewhere that would be more accessible by a control circuit. However, this required removed the chip, and directly soldering the ribbon cable to the pins we care about.
+The complicated step here is connecting a ribbon cable to where the PLCC 68 chip is situated, if this was a more normal keyboard, the terminals may already have terminals elsewhere that would be more accessible by a control circuit. However, this required removing the chip, and directly soldering the ribbon cable to the pins we care about.
 
 
 *Removing the custom PLCC 68, replacing the relevant row/column pins with a ribbon cable.*
@@ -53,7 +53,7 @@ The complicated step here is connecting a ribbon cable to where the PLCC 68 chip
 
 **Connecting to a new USB HID controller**
 
-Once you have access to the matrix, you have a number of options. Firstly, you need a board which allows for a USB HID inteface, so you can natively use it as a Keyboard (or mouse) input.
+Once you have access to the matrix, you have a number of options. Firstly, you need a board which allows for a USB HID interface, so you can natively use it as a Keyboard (or mouse) input.
 
 Here's a couple of options:
 

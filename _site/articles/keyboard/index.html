@@ -11,8 +11,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <!-- RSS -->
-  <link rel="alternate" type="application/rss+xml" title="Hello. I'm Joel Richards. - I'm a software developer." href="https://easyjo.com//feed.xml">
-  <link rel="alternate" type="application/atom+xml" title="Hello. I'm Joel Richards. - I'm a software developer." href="https://easyjo.com//atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Hello. I'm Joel Richards. - I'm a technical leader and engineer." href="https://easyjo.com//feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Hello. I'm Joel Richards. - I'm a technical leader and engineer." href="https://easyjo.com//atom.xml">
 
   <!-- Favicons -->
   <link rel="icon" href="https://easyjo.com//img/favicon.png">
@@ -106,14 +106,14 @@ After a couple of aquisitions in the 90s, 2000s, MEDL now exists under Dynex Sem
 
 <p>Once you’ve done this, you can number each column and row, then the next step is to work out where on the PCB these terminate.. after confirming the ribbon cable pinout didn’t connect directly to the matrix, I checked out the custom MEDL chip. As somewhat expected, 19 of the PLCC pins connected directly to each of the 8x11 keyboard matrix outputs.</p>
 
-<p>The complicated step here is connecting a ribbon cable to where the PLCC 68 chip is situated, if this was a more normal keyboard, the terminals may already have terminals elsewhere that would be more accessible by a control circuit. However, this required removed the chip, and directly soldering the ribbon cable to the pins we care about.</p>
+<p>The complicated step here is connecting a ribbon cable to where the PLCC 68 chip is situated, if this was a more normal keyboard, the terminals may already have terminals elsewhere that would be more accessible by a control circuit. However, this required removing the chip, and directly soldering the ribbon cable to the pins we care about.</p>
 
 <p><em>Removing the custom PLCC 68, replacing the relevant row/column pins with a ribbon cable.</em>
 <img class="img-responsive" src="/img/articles/keyboard4.jpg" title="" /></p>
 
 <p><strong>Connecting to a new USB HID controller</strong></p>
 
-<p>Once you have access to the matrix, you have a number of options. Firstly, you need a board which allows for a USB HID inteface, so you can natively use it as a Keyboard (or mouse) input.</p>
+<p>Once you have access to the matrix, you have a number of options. Firstly, you need a board which allows for a USB HID interface, so you can natively use it as a Keyboard (or mouse) input.</p>
 
 <p>Here’s a couple of options:</p>
 
